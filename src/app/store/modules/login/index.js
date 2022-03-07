@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const state = {
   token: null,
+  name: '',
   loading: false
 }
 

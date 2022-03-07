@@ -1,16 +1,7 @@
 <template>
   <div id="app">
-    <div v-if="$route.path !== '/login'" class="navigation-buttons">
-      <button @click="logout" class="button is-text is-pulled-left">Logout</button>
-      <div class="is-pulled-right">
-        <router-link to="/products" class="button">
-          <i class="fa fa-user-circle"></i><span>Shop</span>
-        </router-link>
-        <router-link to="/cart" class="button is-primary">
-          <i class="fa fa-shopping-cart"></i><span>{{ cartQuantity }}</span>
-        </router-link>
-      </div>
-    </div>
+    <custom-header/>
+    <sidebar v-if="$route.path !== '/login'"/>
     <div class="container">
       <div class="columns">
         <div class="column is-6 column--align-center">
@@ -23,9 +14,15 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import SideBar from './components/sidebar/Sidebar.vue';
+import Header from './components/header/Header.vue';
 
 export default {
   name: 'App',
+  components:{
+    'sidebar': SideBar,
+    'custom-header': Header,
+  },
   computed: {
     ...mapGetters([
       'token',
@@ -46,11 +43,6 @@ export default {
     }
   },
   methods: {
-    logout() {
-      this.$store.dispatch("logout").then(() => {
-       this.$router.push("/login")
-      });
-    },
     updateInitialState(token) {
       this.$store.dispatch('getCartItems', token);
       this.$store.dispatch('getProductItems', token);
@@ -80,18 +72,4 @@ html, body {
   margin: 0 auto;
 }
 
-.navigation-buttons {
-  position: absolute;
-  top: 5px;
-  width: 99%;
-  z-index: 99;
-}
-
-.navigation-buttons .button {
-  margin: 0 2px;
-}
-
-.navigation-buttons .button .fa {
-  padding-right: 5px;
-}
 </style>
