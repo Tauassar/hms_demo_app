@@ -5,17 +5,20 @@
             <h1>Профиль</h1>
         </div>
         <doctor-profile v-if="user_data.type==='doctor'"/>
+        <patient-profile v-if="user_data.type==='patient'"/>
     </div>
 </template>
 
 <script>
 import DoctorProfile from './DoctorProfile.vue';
+import PatientProfile from './PatientProfile.vue';
 import {mapGetters} from 'vuex';
 
 export default {
     name: 'Profile',
     components: {
-        'doctor-profile': DoctorProfile
+        'doctor-profile': DoctorProfile,
+        'patient-profile':PatientProfile
     },
     computed:{
         ...mapGetters([

@@ -7,7 +7,6 @@
                     class="fa-solid fa-6x"
                     :class="{
                                 'fa-user-doctor':user_data.type==='doctor',
-                                'fa-user-vneck':user_data.type!='doctor'
                             }">
                 </i>
             </div>

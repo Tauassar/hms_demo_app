@@ -1,7 +1,7 @@
 [
     {
         "username": "admin",
-        "name": "John Johnson",
+        "name": "Иванов Иван",
         "password": "1223",
         "type": "doctor",
         "position": "Хирург кардиолог",
@@ -17,6 +17,44 @@
         "username": "admin1",
         "password": "1223",
         "name": "Шамелов Т.Ж.",
-        "type": "patient"
+        "birth_date": "05.07.1999",
+        "type": "patient",
+        "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "contacts": {
+            "address": "Кабанбай батыра, 55",
+            "email": "patient@email.com",
+            "telephone": "+7(777)777 77 77"
+        },
+        "upcoming_appointments": "",
+        "last_appointment": "08.01.2020",
+        "medical_status": {
+            "status": "Здоров",
+            "blood_group": "A+",
+            "vaccination_status": "Вакцинирован",
+            "allergies": "Новокаин, Аспирин"
+        },
+        "medical_history": [
+            {
+                "id": 1,
+                "disease": "Гастрит желудка",
+                "doctor": "Иванов Иван",
+                "date": "17.08.2014",
+                "treatment": "Спазмалгон внутривенно 5мг, Талидамид преорально"
+            },
+            {
+                "id": 2,
+                "disease": "Гастрит желудка",
+                "doctor": "Иванов Иван",
+                "date": "17.08.2014",
+                "treatment": "Спазмалгон внутривенно 5мг, Талидамид преорально"
+            },
+            {
+                "id": 3,
+                "disease": "Гастрит желудка",
+                "doctor": "Иванов Иван",
+                "date": "17.08.2014",
+                "treatment": "Спазмалгон внутривенно 5мг, Талидамид преорально"
+            }
+        ]
     }
 ]

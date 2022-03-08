@@ -77,13 +77,6 @@ app.post('/login', (req, res) => {
   }, FAKE_DELAY);
 });
 
-app.get('/products', authenticatedRoute, (req, res) => {
-  fs.readFile(PRODUCT_DATA_FILE, (err, data) => {
-    res.setHeader('Cache-Control', 'no-cache');
-    res.json(JSON.parse(data));
-  });
-});
-
 app.get('/appointments', authenticatedRoute, (req, res) => {
   fs.readFile(APPOINTMENT_DATA_FILE, (err, data) => {
     res.setHeader('Cache-Control', 'no-cache');
@@ -92,10 +85,12 @@ app.get('/appointments', authenticatedRoute, (req, res) => {
 });
 
 app.get('/departments', authenticatedRoute, (req, res) => {
-  fs.readFile(DEPARTMENT_DATA_FILE, (err, data) => {
-    res.setHeader('Cache-Control', 'no-cache');
-    res.json(JSON.parse(data));
-  });
+  setTimeout(() => {
+    fs.readFile(DEPARTMENT_DATA_FILE, (err, data) => {
+      res.setHeader('Cache-Control', 'no-cache');
+      res.json(JSON.parse(data));
+    });
+  }, FAKE_DELAY);
 });
 
 app.get('/cart', authenticatedRoute, (req, res) => {
