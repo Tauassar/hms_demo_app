@@ -6,8 +6,11 @@ const path = require('path');
 
 const app = express();
 
-const PRODUCT_DATA_FILE = path.join(__dirname, 'server-product-data.json');
-const CART_DATA_FILE = path.join(__dirname, 'server-cart-data.json');
+const PRODUCT_DATA_FILE = path.join(__dirname, 'data/server-product-data.json');
+const CART_DATA_FILE = path.join(__dirname, 'data/server-cart-data.json');
+const USER_DATA_FILE = path.join(__dirname, 'data/server-user-data.json');
+const DEPARTMENT_DATA_FILE = path.join(__dirname, 'data/server-department-data.json');
+const APPOINTMENT_DATA_FILE = path.join(__dirname, 'data/server-appointment-data.json');
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -52,16 +55,44 @@ const authenticatedRoute = ((req, res, next) => {
 // to logins
 const FAKE_DELAY = 500; // ms
 app.post('/login', (req, res) => {
-  setTimeout(() => (
-    res.json({
-      success: true,
-      token: API_TOKEN,
-    })
-  ), FAKE_DELAY);
+  setTimeout(() => {
+    fs.readFile(USER_DATA_FILE, (err, raw_data) => {
+      let data = JSON.parse(raw_data);
+      let user = data.find(data=>data.username==req.body.username)
+      if(user && user.password==req.body.password){
+        const {password, ...user_data} = user;
+        res.json({
+          success: true,
+          token: API_TOKEN,
+          ...user_data
+        });
+        // res.json(JSON.parse(data));
+      }else{
+        res.json({
+          success: false,
+        });
+      }
+    }
+    )
+  }, FAKE_DELAY);
 });
 
 app.get('/products', authenticatedRoute, (req, res) => {
   fs.readFile(PRODUCT_DATA_FILE, (err, data) => {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(JSON.parse(data));
+  });
+});
+
+app.get('/appointments', authenticatedRoute, (req, res) => {
+  fs.readFile(APPOINTMENT_DATA_FILE, (err, data) => {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(JSON.parse(data));
+  });
+});
+
+app.get('/departments', authenticatedRoute, (req, res) => {
+  fs.readFile(DEPARTMENT_DATA_FILE, (err, data) => {
     res.setHeader('Cache-Control', 'no-cache');
     res.json(JSON.parse(data));
   });

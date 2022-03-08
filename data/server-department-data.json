@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "Sample",
+        "sub title": "Sample subtitle",
+        "link": "/departments"
+    },
+    {
+        "id": 2,
+        "title": "Sample",
+        "sub title": "Sample subtitle",
+        "link": "/departments"
+    },
+    {
+        "id": 3,
+        "title": "Sample",
+        "sub title": "Sample subtitle",
+        "link": "/departments"
+    },
+    {
+        "id": 4,
+        "title": "Sample",
+        "sub title": "Sample subtitle",
+        "link": "/departments"
+    },
+    {
+        "id": 5,
+        "title": "Sample",
+        "sub title": "Sample title",
+        "link": "/departments"
+    },
+    {
+        "id": 6,
+        "title": "Sample",
+        "sub title": "Sample subtitle",
+        "link": "/departments"
+    }
+]

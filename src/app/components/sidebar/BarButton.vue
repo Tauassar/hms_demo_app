@@ -1,16 +1,19 @@
 .<template>
-    <div class="sidebar-button">
-        <slot></slot>
-        <span class="button-title">
-            {{title}}
-        </span>
-    </div>
+    <router-link class="button-link" :to="link">
+        <div class="sidebar-button">
+            <slot></slot>
+            <span class="button-title">
+                {{title}}
+            </span>
+        </div>
+    </router-link>
 </template>
 
 <script>
 export default {
     name: 'SidebarButton',
     props: {
+        link: String,
         title: String,
     }
 }
@@ -25,5 +28,8 @@ export default {
     }
     .button-title{
         padding-left: 10px;
+    }
+    .button-link{
+        color: #4A4A4A;
     }
 </style>

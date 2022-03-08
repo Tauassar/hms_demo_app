@@ -1,16 +1,11 @@
 .<template>
     <div v-if="$route.path !== '/login'" class="navigation-buttons">
-        <div class="left-part">
-            HMS
-        </div>
+        <router-link to="/">
+            <div class="left-part">
+                <img  class="header-logo" :src="require('@/app/assets/hms_logo.png')" alt="">
+            </div>
+        </router-link>
         <div class="right-part">
-            <!-- <router-link to="/products" class="button is-text">
-                <i class="fa fa-user-circle"></i><span>Shop</span>
-            </router-link> -->
-            <!-- <router-link to="/cart" class="button is-text">
-                <i class="fa fa-shopping-cart"></i><span>CART</span>
-            </router-link> -->
-
             <div class="dropdown" @click="toggleDropdown" :class="{'is-active': dropdownActive}">
             <div class="dropdown-trigger">
                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -28,8 +23,10 @@
                 </div>
             </div>
             </div>
-
-            <button @click="logout" class="button is-text">Выйти</button>
+            <!-- <router-link to="/" class="button is-text">
+                <span>{{user_name}}</span>
+            </router-link> -->
+            <button @click="logout" class="button is-white">Выйти</button>
         </div>
     </div>
 </template>
@@ -57,7 +54,6 @@ export default {
 
 <style scoped lang='scss'>
 .navigation-buttons {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -88,5 +84,13 @@ export default {
 }
 .dropdown-menu{
     min-width: 0;
+}
+.left-part{
+    display: flex;
+    align-items: center;
+}
+.header-logo{
+    margin: 0 auto;
+    width: 75px;
 }
 </style>

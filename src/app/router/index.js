@@ -5,12 +5,31 @@ import ProductList from '../components/product/ProductList.vue';
 import ProductItem from '../components/product/ProductItem.vue';
 import LoginBox from '../components/login/LoginBox.vue';
 import NotFound from '../components/NotFound.vue';
+import MainPage from '../components/InnerPages/Appointments/MainPage.vue'
+import Department from '../components/InnerPages/Departments/Department.vue'
+import Profile from '../components/InnerPages/Profile/Profile.vue'
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
+    {
+      path: '/appointments',
+      component: MainPage
+    },
+    {
+      path: '/profile',
+      component: Profile
+    },
+    {
+      path: '',
+      redirect: '/departments'
+    },
+    {
+      path: '/departments',
+      component: Department
+    },
     {
       path: '/products',
       component: ProductList
@@ -34,13 +53,9 @@ const router = new VueRouter({
       component: LoginBox,
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem("token");
-        if (token) next('/products');
+        if (token) next('');
         else next();
       }
-    },
-    {
-      path: '/',
-      redirect: '/products'
     },
     {
       path: '*',

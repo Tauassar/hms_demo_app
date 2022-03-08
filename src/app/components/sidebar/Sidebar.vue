@@ -1,19 +1,21 @@
 .<template>
     <div class="flex-container">
-        <div class="profile">
-            <i class="fa-solid fa-3x fa-circle-user"></i>
-            <div class="profile-text">
-                <p class="profile-username">
-                    Шамелов Т.Ж
-                </p>
-                <p class="profile-position">
-                    Доктор педиатор общей категории
-                </p>
+        <router-link to='profile'>
+            <div class="profile">
+                <i class="fa-solid fa-3x fa-circle-user"></i>
+                <div class="profile-text">
+                    <p class="profile-username">
+                        {{user_name}}
+                    </p>
+                    <p v-if="user_type=='doctor'" class="profile-position">
+                        {{user_data.position}}
+                    </p>
+                </div>
             </div>
-        </div>
+        </router-link>
         <div class="buttons">
             <div v-for="(button, index) in buttons" :key="index" class="button-container">
-                <sidebar-button :title='button.title'>
+                <sidebar-button v-if="isButtonRendered(button.title)" :title='button.title' :link='button.link'>
                     <i v-if="button.icon" :class="button.icon"></i>
                     <i v-else class="fa-solid fa-arrow-up-right-from-square"></i>
                 </sidebar-button>
@@ -24,6 +26,7 @@
 
 <script>
 import Button from './BarButton.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'SideBar',
@@ -32,11 +35,11 @@ export default {
             buttons: [
                 {
                     title: 'Главная Страница',
-                    link: ''
+                    link: '/departments'
                 },
                 {
                     title: 'Департаменты',
-                    link: '',
+                    link: '/departments',
                     icon: 'fa-solid fa-building-columns'
                 },
                 {
@@ -50,7 +53,7 @@ export default {
                 },
                 {
                     title: 'Записи',
-                    link: ''
+                    link: '/appointments'
                 },
                 {
                     title: 'Настройки',
@@ -58,9 +61,22 @@ export default {
                 },
                 {
                     title: 'Профиль',
-                    link: ''
+                    link: '/profile'
                 },
             ]
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'user_name',
+            'user_type',
+            'user_data'
+        ]),
+    },
+    methods:{
+        isButtonRendered(title){
+            if(title==='Записи') return this.user_type=='doctor';
+            return true
         }
     },
     components: {
@@ -84,7 +100,7 @@ export default {
 }
 .profile-text{
     margin-left: 20px;
-    color: lightblue;
+    color: #82A5BB;
 }
 .profile-position{
     color: grey;

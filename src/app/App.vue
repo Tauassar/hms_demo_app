@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <custom-header/>
-    <sidebar v-if="$route.path !== '/login'"/>
-    <div class="container">
+    <custom-header class="header"/>
+    <sidebar class="sidebar" v-if="$route.path !== '/login'"/>
+    <div 
+      class="container"
+      :class="{'main-content':$route.path !== '/login'}">
       <div class="columns">
-        <div class="column is-6 column--align-center">
+        <div class="column is-8 column--align-center">
           <router-view></router-view>
         </div>
       </div>
@@ -62,6 +64,19 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.sidebar, .header{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.main-content{
+  margin-left: 300px;
+  margin-top: 30px;
+  position: absolute;
+  top: 50px;
 }
 
 .container {
