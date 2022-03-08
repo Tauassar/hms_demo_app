@@ -1,8 +1,8 @@
 {
-  "name": "shopping_cart",
-  "description": "Routing - Shopping Cart",
+  "name": "HMS_app",
+  "description": "HMS appplication",
   "version": "1.0.0",
-  "author": "Fullstack.io",
+  "author": "Tshamelov",
   "private": true,
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run serve\"",
