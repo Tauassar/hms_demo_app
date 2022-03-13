@@ -5,70 +5,70 @@
         "date": "13.01.2021",
         "time": "14.30",
         "sex": "Муж",
-        "birth_date": "05.07.1999",
-        "description": "Go fuck yourself"
+        "birth_date": "03.08.1974",
+        "description": "Appendix"
     },
     {
         "id": 2,
-        "name": "Иван Иванов",
-        "date": "13.01.2021",
-        "time": "14.30",
+        "name": "Тамерлан Шамелов",
+        "date": "15.03.2021",
+        "time": "15:20",
         "sex": "Муж",
         "birth_date": "05.07.1999",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "description": "Text script for testing.Text script for testing.Text script for testing."
     },
     {
         "id": 3,
-        "name": "Иван Иванов",
-        "date": "13.01.2021",
-        "time": "14.30",
+        "name": "Саят Саматов",
+        "date": "04.04.2021",
+        "time": "09:30",
         "sex": "Муж",
-        "birth_date": "05.07.1999",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "birth_date": "11.11.2000",
+        "description": "Text script for testing.Text script for testing.Text script for testing.Text script for testing."
     },
     {
         "id": 4,
-        "name": "Иван Иванов",
-        "date": "13.01.2021",
-        "time": "14.30",
+        "name": "Арман Тукбаев",
+        "date": "17.02.2021",
+        "time": "09:30",
         "sex": "Муж",
-        "birth_date": "05.07.1999",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "birth_date": "05.07.1996",
+        "description": "Text script for testing.Text script for testing.Text script for testing.Text script for testing."
     },
     {
         "id": 5,
-        "name": "Иван Иванов",
+        "name": "Малика Дуйсенгалиева",
         "date": "13.01.2021",
-        "time": "14.30",
-        "sex": "Муж",
-        "birth_date": "05.07.1999",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "time": "19:00",
+        "sex": "Жен",
+        "birth_date": "01.07.1996",
+        "description": "Text script for testing.Text script for testing.Text script for testing.Text script for testing."
     },
     {
         "id": 6,
-        "name": "Иван Иванов",
-        "date": "13.01.2021",
-        "time": "14.30",
-        "sex": "Муж",
-        "birth_date": "05.07.1999",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "name": "Мария Жанатова",
+        "date": "11.03.2021",
+        "time": "11:20",
+        "sex": "Жен",
+        "birth_date": "07.02.1984",
+        "description": "adsadsafds"
     },
     {
         "id": 7,
-        "name": "Иван Иванов",
-        "date": "13.01.2021",
-        "time": "14.30",
+        "name": "Айдос Сатанов",
+        "date": "14.02.2021",
+        "time": "17:30",
         "sex": "Муж",
-        "birth_date": "05.07.1999",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "birth_date": "08.08.2002",
+        "description": "Text script for testing.Text script for testing.Text script for testing.Text script for testing."
     },
     {
         "id": 8,
-        "name": "Иван Иванов",
-        "date": "13.01.2021",
-        "time": "14.30",
+        "name": "Даяна Сагитова",
+        "date": "01.04.2021",
+        "time": "11:30",
         "sex": "Муж",
-        "birth_date": "05.07.1999",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "birth_date": "07.07.1999",
+        "description": "Text script for testing.Text script for testing.Text script for testing.Text script for testing."
     }
 ]

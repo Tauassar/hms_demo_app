@@ -1,19 +1,19 @@
 [
     {
         "id": 1,
-        "title": "Sample",
+        "title": "Хирургия",
         "sub title": "Sample subtitle",
         "link": "/departments"
     },
     {
         "id": 2,
-        "title": "Sample",
+        "title": "Кардиология",
         "sub title": "Sample subtitle",
         "link": "/departments"
     },
     {
         "id": 3,
-        "title": "Sample",
+        "title": "Педиатрия",
         "sub title": "Sample subtitle",
         "link": "/departments"
     },
