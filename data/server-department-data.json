@@ -3,13 +3,13 @@
         "id": 1,
         "title": "Хирургия",
         "sub title": "Sample subtitle",
-        "link": "/departments"
+        "link": "/department/surgery"
     },
     {
         "id": 2,
         "title": "Кардиология",
         "sub title": "Sample subtitle",
-        "link": "/departments"
+        "link": "/department/cardio"
     },
     {
         "id": 3,

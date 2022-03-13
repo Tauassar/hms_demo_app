@@ -11,6 +11,8 @@ const CART_DATA_FILE = path.join(__dirname, 'data/server-cart-data.json');
 const USER_DATA_FILE = path.join(__dirname, 'data/server-user-data.json');
 const DEPARTMENT_DATA_FILE = path.join(__dirname, 'data/server-department-data.json');
 const APPOINTMENT_DATA_FILE = path.join(__dirname, 'data/server-appointment-data.json');
+const CARDIO_DEPT_DATA_FILE = path.join(__dirname, 'data/server-cardio-department.json');
+const SURGERY_DEPT_DATA_FILE = path.join(__dirname, 'data/server-surgery-department.json');
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -79,6 +81,20 @@ app.post('/login', (req, res) => {
 
 app.get('/appointments', authenticatedRoute, (req, res) => {
   fs.readFile(APPOINTMENT_DATA_FILE, (err, data) => {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(JSON.parse(data));
+  });
+});
+
+app.get('/department/cardio', authenticatedRoute, (req, res) => {
+  fs.readFile(CARDIO_DEPT_DATA_FILE, (err, data) => {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(JSON.parse(data));
+  });
+});
+
+app.get('/department/surgery', authenticatedRoute, (req, res) => {
+  fs.readFile(SURGERY_DEPT_DATA_FILE, (err, data) => {
     res.setHeader('Cache-Control', 'no-cache');
     res.json(JSON.parse(data));
   });

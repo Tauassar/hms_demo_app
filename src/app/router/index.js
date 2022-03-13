@@ -6,8 +6,10 @@ import ProductItem from '../components/product/ProductItem.vue';
 import LoginBox from '../components/login/LoginBox.vue';
 import NotFound from '../components/NotFound.vue';
 import MainPage from '../components/InnerPages/Appointments/MainPage.vue'
-import Department from '../components/InnerPages/Departments/Department.vue'
 import Profile from '../components/InnerPages/Profile/Profile.vue'
+import Departments from '../components/InnerPages/Departments/Department.vue'
+import Department from '../components/InnerPages/Department/Department.vue'
+import DepartmentList from '../components/InnerPages/Department/DepartmentsInner/DepartmentList.vue'
 
 Vue.use(VueRouter);
 
@@ -28,7 +30,21 @@ const router = new VueRouter({
     },
     {
       path: '/departments',
-      component: Department
+      component: Departments
+    },
+    {
+      path: '/department/',
+      component: Department,
+      children: [
+        {
+          path: 'cardio',
+          component: DepartmentList,
+        },
+        {
+          path: 'surgery',
+          component: DepartmentList,
+        },
+      ]
     },
     {
       path: '/products',
