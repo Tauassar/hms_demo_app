@@ -1,7 +1,7 @@
 .<template>
     <div class="card-item">
         <div class="profile-pic">
-            <img class="profile-img" :src="require('./doc_profiles/' + profile.img)" alt="profile_picture">
+            <img class="profile-img" :src="require('@/app/assets/doc_profiles/' + profile.img)" alt="profile_picture">
         </div>
         <div class="profile-text">
             <div class="profile-name-block">
