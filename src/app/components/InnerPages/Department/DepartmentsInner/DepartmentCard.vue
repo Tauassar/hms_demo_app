@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="profile-button-block">
-            <button class="button is-primary full-width">Записаться на прием</button>
+            <button @click="toggleModal" class="button is-primary full-width">Записаться на прием</button>
         </div>
     </div>
 </template>
@@ -22,7 +22,12 @@ export default {
     name: "DepartmentCardItem",
     props:{
         profile: Object
-    }
+    },
+    methods: {
+        toggleModal(){
+            this.$eventHub.$emit('open_modal');
+        }
+    },
 }
 </script>
 

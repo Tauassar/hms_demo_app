@@ -11,6 +11,9 @@
         </div>
       </div>
     </div>
+    <div v-if="modalIsOpen" @click.self="modalIsOpen=false" class="folder-block">
+      <modal-form />
+    </div>
   </div>
 </template>
 
@@ -18,12 +21,20 @@
 import { mapGetters } from 'vuex';
 import SideBar from './components/sidebar/Sidebar.vue';
 import Header from './components/header/Header.vue';
+import ModalForm from './components/InnerPages/Department/DepartmentsInner/ModalForm.vue'
+
 
 export default {
   name: 'App',
   components:{
     'sidebar': SideBar,
     'custom-header': Header,
+    'modal-form': ModalForm
+  },
+  data(){
+      return {
+          modalIsOpen: false
+      }
   },
   computed: {
     ...mapGetters([
@@ -31,11 +42,27 @@ export default {
       'cartQuantity'
     ])
   },
+  methods: {
+    updateInitialState(token) {
+      this.$store.dispatch('getCartItems', token);
+      this.$store.dispatch('getProductItems', token);
+    },
+  },
   created() {
     const token = localStorage.getItem("token");
     if (token) {
       this.updateInitialState(token);
     }
+    this.$eventHub.$on('open_modal', ()=>{
+      this.modalIsOpen = true;
+    })
+    this.$eventHub.$on('close_modal', ()=>{
+      this.modalIsOpen = false;
+    })
+  },
+  beforeDestroy() {
+      this.$eventHub.$off('close_modal');
+      this.$eventHub.$off('open_modal');
   },
   watch: {
     token() {
@@ -44,12 +71,6 @@ export default {
       }
     }
   },
-  methods: {
-    updateInitialState(token) {
-      this.$store.dispatch('getCartItems', token);
-      this.$store.dispatch('getProductItems', token);
-    }
-  }
 }
 </script>
 
@@ -85,6 +106,19 @@ html, body {
 
 .column--align-center {
   margin: 0 auto;
+}
+
+.folder-block{
+  position: fixed;
+  left: 0%;
+  width: 0%;
+  background-color: rgba(0, 0, 0, 0.274);
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>

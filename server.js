@@ -86,6 +86,20 @@ app.get('/appointments', authenticatedRoute, (req, res) => {
   });
 });
 
+app.post('/appointments', authenticatedRoute, (req, res) => {
+  fs.readFile(APPOINTMENT_DATA_FILE, (err, data) => {
+    let appointments = JSON.parse(data);
+    appointments.push({
+        id: appointments.length+1,
+        ...req.body
+      })
+    fs.writeFile(APPOINTMENT_DATA_FILE, JSON.stringify(appointments, null, 4), () => {
+      res.setHeader('Cache-Control', 'no-cache');
+      res.json(req.body);
+    });
+  });
+});
+
 app.get('/department/cardio', authenticatedRoute, (req, res) => {
   fs.readFile(CARDIO_DEPT_DATA_FILE, (err, data) => {
     res.setHeader('Cache-Control', 'no-cache');
