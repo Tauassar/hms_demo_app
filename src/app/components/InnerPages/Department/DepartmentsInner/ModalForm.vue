@@ -20,7 +20,7 @@
                 </div>
                 <div class="input-with-label">
                     <span>Время регистрации</span>
-                    <input ref="time" class="input is-primary" type="time" placeholder="Время" required>
+                    <input ref="time" class="input is-primary" min="00:00" max="23:59" type="time" placeholder="Время" required>
                 </div>
                 <div class="input-with-label">
                     <span>Выберите пол</span>
