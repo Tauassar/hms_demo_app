@@ -31,10 +31,10 @@ class Migration(migrations.Migration):
             name='short_description',
             field=models.CharField(blank=True, max_length=50, null=True),
         ),
-        migrations.AlterModelTable(
-            name='appointment',
-            table='patient_appointments',
-        ),
+        # migrations.AlterModelTable(
+        #     name='appointment',
+        #     table='patient_appointments',
+        # ),
         migrations.AlterModelTable(
             name='customuser',
             table='users',
@@ -51,10 +51,10 @@ class Migration(migrations.Migration):
             name='medicalstatus',
             table='patient_medical_status',
         ),
-        migrations.AlterModelTable(
-            name='upcomingappointments',
-            table='patient_upcoming_appointments',
-        ),
+        # migrations.AlterModelTable(
+        #     name='upcomingappointments',
+        #     table='patient_upcoming_appointments',
+        # ),
         migrations.AlterModelTable(
             name='usercontacts',
             table='user_contact_information',
