@@ -4,7 +4,6 @@ from apps.user_app.models import CustomUser
 
 
 class AppointmentDay(models.Model):
-
     class Meta:
         db_table = 'appointment_day'
 
@@ -19,8 +18,27 @@ class AppointmentDay(models.Model):
     )
 
     def get_available_time_slots(self):
-        for appointment in self.appointment:
-            print(appointment.time)
+        appointment_list = self.appointment_event.all()
+        time_slot_list = [x for _, x in Appointment.TimeSlots.choices]
+        time_slots = []
+
+        for appointment in appointment_list:
+            time_slot_list.remove(Appointment.get_time_string(appointment.time))
+
+        for time_slot in time_slot_list:
+            time_slots.append({
+                "time_slot": time_slot
+            })
+        return time_slots
+
+    @staticmethod
+    def get_all_time_slots():
+        time_slots = []
+        for _, time_slot in Appointment.TimeSlots.choices:
+            time_slots.append({
+                "time_slot": time_slot
+            })
+        return time_slots
 
     def __str__(self):
         return f'{self.doctor.first_name} {self.doctor.last_name} {self.date}'
@@ -70,6 +88,13 @@ class Appointment(models.Model):
         for num, string in cls.TimeSlots.choices:
             if num == time_int:
                 return string
+        return None
+
+    @classmethod
+    def get_time_int(cls, time_str):
+        for num, string in cls.TimeSlots.choices:
+            if string == time_str:
+                return int
         return None
 
     def __str__(self):

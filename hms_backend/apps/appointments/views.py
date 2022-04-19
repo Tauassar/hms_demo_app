@@ -1,31 +1,79 @@
-from rest_framework.generics import RetrieveAPIView
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import status
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from datetime import datetime
-
 
 # Create your views here.
 from apps.appointments.models import AppointmentDay
-from apps.appointments.serializers import AppointmentDaySerializer
+from apps.appointments.serializers import TimeSlotSerializer, AppointmentSerializer
+from apps.appointments.utils import get_appointment_day
+from apps.user_app.utils import get_doctor_object
 
 
-def isWeekend(date):
-    return True if datetime.fromisoformat(date).weekday() > 4\
-        else False
-
-
-class AppointmentDayView(APIView, RetrieveAPIView):
+class AppointmentDayView(
+    RetrieveModelMixin,
+    CreateModelMixin,
+    GenericAPIView
+):
+    allowed_methods = ['GET', 'POST']
     queryset = AppointmentDay.objects.all()
-    serializer_class = AppointmentDaySerializer
+    serializer_classes = {
+        'create': AppointmentSerializer,
+        'retrieve': TimeSlotSerializer,
+    }
 
-    # def get_serializer_class(self)
-    #     if self.action == 'list':
-    #         return self.serializer_classes['listSerializer']
-    #     if self.action == 'retrieve':
-    #         return self.serializer_classes['retrieveSerializer']
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return self.serializer_classes['retrieve']
+        return self.serializer_classes['create']
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
-        staff = self.get_object().staff.all().prefetch_related('user')
-        users = [x.user for x in staff]
-        serializer = self.get_serializer(users, many=True)
-        return Response(serializer.data)
+        date = self.kwargs['date']
+        doctor_pk = self.kwargs['doctor_pk']
+
+        try:
+            doctor = get_doctor_object(doctor_pk)
+            appointment_day = get_appointment_day(date, doctor)
+            if appointment_day:
+                time_slots = appointment_day.get_available_time_slots()
+            else:
+                time_slots = AppointmentDay.get_all_time_slots()
+            serializer = self.get_serializer(time_slots, many=True)
+            return Response(serializer.data)
+        except ObjectDoesNotExist as e:
+            return Response({
+                "error": str(e)
+            })
+
+    def create(self, request, *args, **kwargs):
+        doctor_pk = self.kwargs['doctor_pk']
+
+        try:
+            doctor = get_doctor_object(doctor_pk)
+
+            if not AppointmentDay.objects.filter(
+                    date=request.data['date'],
+                    doctor=doctor
+            ).exists():
+                AppointmentDay.objects.create(
+                    date=request.data['date'],
+                    doctor=doctor
+                ).save()
+            serializer = self.get_serializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+            )
+        except ObjectDoesNotExist as e:
+            return Response({
+                "error": str(e)
+            })
