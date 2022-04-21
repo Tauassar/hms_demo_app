@@ -1,14 +1,26 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, ListModelMixin
 from rest_framework.response import Response
 
 # Create your views here.
-from apps.appointments.models import AppointmentDay
-from apps.appointments.serializers import TimeSlotSerializer, AppointmentSerializer
+from apps.appointments.models import AppointmentDay, Appointment
+from apps.appointments.serializers import TimeSlotSerializer, AppointmentSerializer, GetAppointments
 from apps.appointments.utils import get_appointment_day
 from apps.user_app.utils import get_doctor_object
+
+
+class Appointments(
+    ListModelMixin,
+    GenericAPIView
+):
+    allowed_methods = ['GET']
+    queryset = Appointment.objects.all()
+    serializer_class = GetAppointments
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
 
 class AppointmentDayView(

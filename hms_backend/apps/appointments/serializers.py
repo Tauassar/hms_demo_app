@@ -12,6 +12,12 @@ class TimeSlotSerializer(serializers.Serializer):
     )
 
 
+class GetAppointments(serializers.ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = '__all__'
+
+
 class AppointmentSerializer(serializers.ModelSerializer):
 
     class Meta:
