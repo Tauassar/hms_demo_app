@@ -17,7 +17,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 AUTH_USER_MODEL = 'user_app.CustomUser'
 
-CORS_ALLOWED_ORIGINS = [
+# CORS_ALLOWED_ORIGINS = [
+#     '*',
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8080",
 ]
 

@@ -31,7 +31,12 @@ class LoginView(views.APIView):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return Response(status=status.HTTP_200_OK, data={"status": "success"})
+
+                if request.user.type == 'doctor':
+                    serializer = GetDoctorSerializer(request.user)
+                elif request.user.type == 'patient':
+                    serializer = GetPatientSerializer(request.user)
+                return Response(status=status.HTTP_200_OK, data=serializer.data)
             else:
                 return Response(
                     status=status.HTTP_404_NOT_FOUND,
