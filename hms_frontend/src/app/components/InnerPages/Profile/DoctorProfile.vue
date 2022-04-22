@@ -33,11 +33,11 @@
                 <div class="footer-contacts">
                     <div class="email">
                         <b>Email:</b>
-                        <span>{{user_data.contacts.email}}</span>
+                        <span>{{get_email(user_data)}}</span>
                     </div>
                     <div class="email">
                         <b>Тел:</b>
-                        <span>{{user_data.contacts.telephone}}</span>
+                        <span>{{get_number(user_data)}}</span>
                     </div>
                 </div>
                 <div class="buttons">
@@ -56,7 +56,25 @@ export default {
     computed:{
         ...mapGetters([
             'user_data'
-        ])
+        ]),
+    },
+    methods:{
+        get_email(data){
+            if(data.contacts){
+                return data.contacts.email
+            }
+            else{
+                return ""
+            }
+        },
+        get_number(data){
+            if(data.contacts){
+                return data.contacts.telephone
+            }
+            else{
+                return ""
+            }
+        }
     }
 }
 </script>

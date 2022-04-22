@@ -1,12 +1,13 @@
 .<template>
     <div class="list-rapper">
+        <span v-if="profiles.length==0">К сожалению нету доступных врачей для записи</span>
         <card-item v-for="profile in profiles" :profile="profile" :key="profile.id"/>
     </div>
 </template>
 
 <script>
 import DepartmentCardItem from './DepartmentCard.vue'
-import axios from 'axios';
+import axios from '@/app/store/axios';
 
 export default {
     name: "CardioDepartment",
@@ -18,9 +19,10 @@ export default {
     },
     created(){
             this.loading = true;
-            let route = this.$route.path=='/department/surgery' ? 'surgery':'cardio';
-            axios.get(`/api/department/${route}?token=${localStorage.getItem('token')}`).then((response) => {
+            axios.get(`/departments/${this.$route.params.id}`).then((response) => {
             let data = response.data;
+            // eslint-disable-next-line no-console
+            console.log(data)
             this.profiles = data
         })
         .then(

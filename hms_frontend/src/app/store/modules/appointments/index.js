@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '@/app/store/axios';
 
 const state = {
     appointment_list: [],
@@ -20,7 +20,7 @@ const mutations = {
 const actions = {
     get_appointment_list ({ commit }) {
         commit('LOADING_PENDING');
-        return axios.get(`/api/appointments?token=${localStorage.getItem('token')}`).then((response) => {
+        return axios.get('/appointments/').then((response) => {
         let data = response.data;
         if(data){
             commit('SET_APPOINTMENT_LIST', response.data);

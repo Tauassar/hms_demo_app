@@ -49,7 +49,7 @@ export default {
                 },
                 {
                     title: 'Пациенты',
-                    link: ''
+                    link: '/patients'
                 },
                 {
                     title: 'Записи',

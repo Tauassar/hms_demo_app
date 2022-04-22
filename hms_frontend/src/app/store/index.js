@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import product from './modules/product';
-import cart from './modules/cart';
 import departments from './modules/departments';
 import appointments from './modules/appointments';
+import patients from './modules/patients';
 import login from './modules/login';
 import createPersistedState from 'vuex-persistedstate';
 
@@ -15,9 +14,8 @@ export default new Vuex.Store({
   })],
   modules: {
     appointments,
-    product,
-    cart,
     login,
-    departments
+    departments,
+    patients
   }
 });

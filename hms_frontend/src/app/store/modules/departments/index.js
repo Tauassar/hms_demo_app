@@ -1,8 +1,10 @@
-import axios from 'axios';
+import axios from '../../axios'
+// import axios from 'axios';
 
 const state = {
   department_list: [],
-  loading_departments: false
+  loading_departments: false,
+  current_department: {}
 }
 
 const mutations = {
@@ -15,12 +17,15 @@ const mutations = {
   LOADING_SUCCESS (state) {
     state.loading_departments = false;
   },
+  CURRENT_DEPARTMENT (state, department_obj) {
+    state.current_department = department_obj;
+  },
 }
 
 const actions = {
     get_department_list ({ commit }) {
         commit('LOADING_PENDING');
-        return axios.get(`/api/departments?token=${localStorage.getItem('token')}`).then((response) => {
+        return axios.get(`/departments`).then((response) => {
         let data = response.data;
         if(data){
             commit('SET_DEPARTMENT_LIST', response.data);
@@ -31,11 +36,18 @@ const actions = {
         }
         });
   },
+  set_current_department ({ commit, state }, id) {
+    let obj = state.department_list.find((data)=>{
+      return data.id == id
+    })
+    commit('CURRENT_DEPARTMENT', obj)
+  },
 }
 
 const getters = {
     department_list: state => state.department_list,
     loading_departments: state => state.loading_departments,
+    current_department: state => state.current_department,
 }
 
 const depModule = {

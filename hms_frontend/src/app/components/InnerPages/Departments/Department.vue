@@ -10,6 +10,7 @@
                 :title="department.title"
                 :link="department.link"
                 :subtitle="department.subtitle"
+                :id="department.id"
             />
         </div>
     </div>
@@ -26,7 +27,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-        'loading_departments',
         'department_list'
         ])
     },

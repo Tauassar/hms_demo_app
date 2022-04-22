@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios from '../../axios';
+import Cookies from 'js-cookie'
 
 const state = {
   token: null,
@@ -24,25 +25,29 @@ const mutations = {
 const actions = {
   login ({ commit }, payload) {
     commit('LOGIN_PENDING');
-    return axios.post('/api/login', payload).then((response) => {
-      let token = response.data.token;
-      if(token){
-        localStorage.setItem("token", response.data.token);
-        commit('SET_TOKEN', response.data.token);
-        const {token, success, ...data} = response.data; 
-        commit('SET_USER_DATA', data);
+    return axios.post('user/login/', payload).then((response) => {
+      if(response.data){
+        let token = response.data['sessionid'];
+        Cookies.set('sessionid', token);
+        localStorage.setItem("token", token);
+        commit('SET_TOKEN', token);
+        // const {token, success, ...data} = response.data;
+        commit('SET_USER_DATA', response.data);
         commit('LOGIN_SUCCESS');
       }else{
         commit('LOGIN_SUCCESS');
       }
+    }).catch((error)=>{
+      // eslint-disable-next-line no-console
+      console.log(error);
+      commit('LOGIN_SUCCESS');
     });
   },
   logout ({ commit }) {
-    return new Promise((resolve) => {
+    return axios.get('/user/logout/').then(() => {
       localStorage.removeItem("token");
       sessionStorage.clear();
       commit('SET_TOKEN', null);
-      resolve();
     });
   }
 }
@@ -50,7 +55,7 @@ const actions = {
 const getters = {
   token: state => state.token,
   loading: state => state.loading,
-  user_name: state => state.user_data.name,
+  user_name: state => `${state.user_data.first_name} ${state.user_data.last_name}`,
   user_type: state => state.user_data.type,
   user_data: state => state.user_data
 }

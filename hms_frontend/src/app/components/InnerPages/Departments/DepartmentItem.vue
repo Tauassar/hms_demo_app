@@ -1,5 +1,5 @@
 .<template>
-    <router-link class="department-item" :to='link'>
+    <router-link class="department-item" :to="{name: 'department', params: {id: id}}">
             <div class="department-icon">
                 <i class="fa-solid fa-5x fa-building"></i>
             </div>
@@ -21,6 +21,7 @@ export default {
         title: String,
         subtitle: String,
         link: String,
+        id: String,
     }
 }
 </script>

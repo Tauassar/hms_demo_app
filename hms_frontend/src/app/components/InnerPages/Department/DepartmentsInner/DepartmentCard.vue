@@ -5,10 +5,10 @@
         </div>
         <div class="profile-text">
             <div class="profile-name-block">
-                <h3 class="name">{{profile.name}}</h3>
+                <h3 class="name">{{get_name}}</h3>
             </div>
             <div class="profile-description-block">
-                <h4 class="description">{{profile.name}}</h4>
+                <h4 class="description">{{profile.description_short}}</h4>
             </div>
         </div>
         <div class="profile-button-block">
@@ -28,6 +28,11 @@ export default {
             this.$eventHub.$emit('open_modal');
         }
     },
+    computed:{
+        get_name(){
+            return `${this.profile.first_name} ${this.profile.last_name}`;
+        }
+    }
 }
 </script>
 

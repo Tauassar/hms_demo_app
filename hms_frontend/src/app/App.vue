@@ -39,20 +39,9 @@ export default {
   computed: {
     ...mapGetters([
       'token',
-      'cartQuantity'
     ])
   },
-  methods: {
-    updateInitialState(token) {
-      this.$store.dispatch('getCartItems', token);
-      this.$store.dispatch('getProductItems', token);
-    },
-  },
   created() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      this.updateInitialState(token);
-    }
     this.$eventHub.$on('open_modal', ()=>{
       this.modalIsOpen = true;
     })
@@ -63,13 +52,6 @@ export default {
   beforeDestroy() {
       this.$eventHub.$off('close_modal');
       this.$eventHub.$off('open_modal');
-  },
-  watch: {
-    token() {
-      if (this.token) {
-        this.updateInitialState(this.token);
-      }
-    }
   },
 }
 </script>

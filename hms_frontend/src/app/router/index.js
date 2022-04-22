@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import CartList from '../components/cart/CartList.vue';
-import ProductList from '../components/product/ProductList.vue';
-import ProductItem from '../components/product/ProductItem.vue';
+// import CartList from '../components/cart/CartList.vue';
+// import ProductList from '../components/product/ProductList.vue';
+// import ProductItem from '../components/product/ProductItem.vue';
 import LoginBox from '../components/login/LoginBox.vue';
 import NotFound from '../components/NotFound.vue';
 import MainPage from '../components/InnerPages/Appointments/MainPage.vue'
 import Profile from '../components/InnerPages/Profile/Profile.vue'
+import Patients from '../components/InnerPages/Patients/PatientsPage.vue'
 import Departments from '../components/InnerPages/Departments/Department.vue'
 import Department from '../components/InnerPages/Department/Department.vue'
 import DepartmentList from '../components/InnerPages/Department/DepartmentsInner/DepartmentList.vue'
@@ -19,6 +20,10 @@ const router = new VueRouter({
     {
       path: '/appointments',
       component: MainPage
+    },
+    {
+      path: '/patients',
+      component: Patients
     },
     {
       path: '/profile',
@@ -37,32 +42,12 @@ const router = new VueRouter({
       component: Department,
       children: [
         {
-          path: 'cardio',
+          path: ':id',
+          name: 'department',
           component: DepartmentList,
-        },
-        {
-          path: 'surgery',
-          component: DepartmentList,
+          props: true,
         },
       ]
-    },
-    {
-      path: '/products',
-      component: ProductList
-    },
-    {
-      path: '/products/:id',
-      component: ProductItem,
-      props: true,
-      beforeEnter: (to, from, next) => {
-        const id = to.params.id;
-        if (![1, 2, 3, 4].includes(Number(id))) next('/not-found');
-        else next();
-      }
-    },
-    {
-      path: '/cart',
-      component: CartList
     },
     {
       path: '/login',

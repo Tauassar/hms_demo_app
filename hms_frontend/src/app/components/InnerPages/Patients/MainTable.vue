@@ -5,17 +5,17 @@
                 <tr>
                     <th>#</th>
                     <th>Пациент</th>
-                    <th style="width: 115px">Дата записи</th>
-                    <th>Время записи</th>
+                    <th style="width: 115px">Медицинский статус</th>
+                    <th>Группа крови</th>
                     <th>Описание</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(patient, index) in PaginatedPatients" :key="index">
                     <th>{{patient.id}}</th>
-                    <th>{{patient.patient}}</th>
-                    <th>{{patient.date}}</th>
-                    <th>{{patient.time_str}}</th>
+                    <th>{{`${patient.first_name} ${patient.last_name}`}}</th>
+                    <th>{{medical_status(patient.medical_status).status}}</th>
+                    <th>{{medical_status(patient.medical_status).blood_group}}</th>
                     <th>{{patient.description}}</th>
                 </tr>
             </tbody>
@@ -23,7 +23,7 @@
         <div class="pagination">
             <pagination
                 v-model='currentPage'
-                :maxPage='appointment_list.length/paginatedPatientsCount+1'
+                :maxPage='patient_list.length/paginatedPatientsCount+1'
                 prevText='Предыдущая страница'
                 nextText='Следующая страница'
             />
@@ -49,20 +49,25 @@ export default {
     },
     computed: {
         PaginatedPatients(){
-            return this.appointment_list.slice(
+            return this.patient_list.slice(
                 (this.currentPage-1)*this.paginatedPatientsCount, 
                 this.currentPage*this.paginatedPatientsCount
                 )
         },
         ...mapGetters([
-        'loading_appointments',
-        'appointment_list'
-        ])
+            'loading_patients',
+            'patient_list'
+        ]),
+    },
+    methods:{
+        medical_status(status){
+            if(status!=null)
+                return status
+            return { status: "Данные отсутствуют", blood_group: "Данные отсутствуют" }
+        },
     },
     created() {
-        // get_department_list() {
-            this.$store.dispatch("get_appointment_list")
-        // }
+            this.$store.dispatch("get_patient_list")
     },
 }
 </script>
