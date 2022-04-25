@@ -2,7 +2,7 @@
     <div class="main is-flex is-align-items-center columns">
         <div class="column is-4">
             <div class="is-flex">
-                <button class="button is-link big">Добавить запись</button>
+                <button @click="toggleModal" class="button is-link big">Добавить запись</button>
                 <button class="button is-link small"><i class="fa-solid fa-filter"></i></button>
             </div>
         </div>
@@ -15,6 +15,11 @@
 <script>
 export default {
     name: 'MainPageFilter',
+    methods: {
+        toggleModal(){
+            this.$eventHub.$emit('open_modal');
+        }
+    }
 }
 </script>
 

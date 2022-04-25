@@ -1,13 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import CartList from '../components/cart/CartList.vue';
-// import ProductList from '../components/product/ProductList.vue';
-// import ProductItem from '../components/product/ProductItem.vue';
 import LoginBox from '../components/login/LoginBox.vue';
 import NotFound from '../components/NotFound.vue';
 import MainPage from '../components/InnerPages/Appointments/MainPage.vue'
 import Profile from '../components/InnerPages/Profile/Profile.vue'
 import Patients from '../components/InnerPages/Patients/PatientsPage.vue'
+import Doctors from '../components/InnerPages/Doctors/DoctorsPage.vue'
 import Departments from '../components/InnerPages/Departments/Department.vue'
 import Department from '../components/InnerPages/Department/Department.vue'
 import DepartmentList from '../components/InnerPages/Department/DepartmentsInner/DepartmentList.vue'
@@ -24,6 +22,10 @@ const router = new VueRouter({
     {
       path: '/patients',
       component: Patients
+    },
+    {
+      path: '/doctors',
+      component: Doctors
     },
     {
       path: '/profile',

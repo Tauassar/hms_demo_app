@@ -44,7 +44,7 @@ export default {
                 },
                 {
                     title: 'Врачи',
-                    link: '',
+                    link: '/doctors',
                     icon: 'fa-solid fa-address-card'
                 },
                 {

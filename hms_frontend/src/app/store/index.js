@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import departments from './modules/departments';
 import appointments from './modules/appointments';
 import patients from './modules/patients';
+import doctors from './modules/doctors';
 import login from './modules/login';
 import createPersistedState from 'vuex-persistedstate';
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     appointments,
     login,
     departments,
-    patients
+    patients,
+    doctors
   }
 });
