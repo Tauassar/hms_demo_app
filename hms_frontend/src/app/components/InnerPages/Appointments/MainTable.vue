@@ -1,6 +1,5 @@
 <template>
     <div class="main-table is-fullwidth">
-        {{appointment_list}}
         <table class="table is-narrow is-fullwidth">
             <thead>
                 <tr>
@@ -12,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(patient, index) in PaginatedPatients" :key="index">
+                <tr @click="$router.push(`/appointments/${patient.id}`)" v-for="(patient, index) in PaginatedPatients" :key="index">
                     <th>{{patient.id}}</th>
                     <th>{{patient.patient}}</th>
                     <th>{{patient.date}}</th>
@@ -68,8 +67,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
     .table{
         border: 1px solid #DBDBDB;
+        tr{
+            cursor: pointer;
+            :hover{
+                color: blue;
+            }
+        }
     }
 </style>

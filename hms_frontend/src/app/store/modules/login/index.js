@@ -1,4 +1,5 @@
-import axios from '../../axios';
+import axios from '@/app/store/axios';
+// import axios from '../../axios';
 import Cookies from 'js-cookie'
 
 const state = {
