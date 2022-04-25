@@ -25,7 +25,10 @@ export default {
     },
     methods: {
         toggleModal(){
-            this.$eventHub.$emit('open_modal');
+            this.$eventHub.$emit('open_modal', {
+                doctor: this.profile.username,
+                patient: null
+            });
         }
     },
     computed:{

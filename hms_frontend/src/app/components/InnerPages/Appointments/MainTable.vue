@@ -1,5 +1,6 @@
 <template>
     <div class="main-table is-fullwidth">
+        {{appointment_list}}
         <table class="table is-narrow is-fullwidth">
             <thead>
                 <tr>

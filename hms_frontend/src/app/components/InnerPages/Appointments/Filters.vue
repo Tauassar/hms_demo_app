@@ -17,7 +17,10 @@ export default {
     name: 'MainPageFilter',
     methods: {
         toggleModal(){
-            this.$eventHub.$emit('open_modal');
+            this.$eventHub.$emit('open_modal', {
+                doctor: null,
+                patient: null
+            });
         }
     }
 }

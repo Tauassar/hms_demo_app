@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import LoginBox from '../components/login/LoginBox.vue';
 import NotFound from '../components/NotFound.vue';
 import MainPage from '../components/InnerPages/Appointments/MainPage.vue'
+// import Appointment from '../components/InnerPages/Appointments/Appointment/AppointmentPage.vue'
 import Profile from '../components/InnerPages/Profile/Profile.vue'
 import Patients from '../components/InnerPages/Patients/PatientsPage.vue'
 import Doctors from '../components/InnerPages/Doctors/DoctorsPage.vue'
@@ -17,7 +18,15 @@ const router = new VueRouter({
   routes: [
     {
       path: '/appointments',
-      component: MainPage
+      component: MainPage,
+      // children: [
+      //   {
+      //     path: ':id',
+      //     name: 'appointment',
+      //     component: DepartmentList,
+      //     props: true,
+      //   },
+      // ]
     },
     {
       path: '/patients',

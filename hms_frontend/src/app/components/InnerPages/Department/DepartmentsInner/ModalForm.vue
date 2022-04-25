@@ -11,33 +11,31 @@
         >
             <div class="form-inputs">
                 <div class="input-with-label">
-                    <span>Имя</span>
-                    <input ref="name" class="input is-primary" type="text" placeholder="Имя" required>
+                    <span>ИИН врача</span>
+                    <input v-if="modalData.doctor!=undefined" ref="IIN_doctor" class="input is-primary" type="text" :value="modalData.doctor" disabled required>
+                    <input v-else-if="user_type=='doctor'" ref="IIN_doctor" class="input is-primary" type="text" :value="user_data.username" disabled required>
+                    <input v-else ref="IIN_doctor" class="input is-primary" type="text" placeholder="ИИН врача" required>
+                </div>
+                <div class="input-with-label">
+                    <span>ИИН пациента</span>
+                    <input v-if="modalData.patient!=undefined" ref="IIN_patient" class="input is-primary" type="text" :value="modalData.patient" disabled required>
+                    <input v-else-if="user_type=='patient'" ref="IIN_patient" class="input is-primary" type="text" :value="user_data.username" disabled required>
+                    <input v-else ref="IIN_patient" class="input is-primary" type="text" placeholder="ИИН пациента" required>
                 </div>
                 <div class="input-with-label">
                     <span>Дата регистрации</span>
-                    <input ref="date" class="input is-primary" type="date" placeholder="Дата" required>
+                    <input ref="date" @change="load_timeslots" class="input is-primary" type="date" placeholder="Дата" required>
                 </div>
                 <div class="input-with-label">
                     <span>Время регистрации</span>
-                    <input ref="time" class="input is-primary" min="00:00" max="23:59" type="time" placeholder="Время" required>
-                </div>
-                <div class="input-with-label">
-                    <span>Выберите пол</span>
-                    <div class="control">
-                        <label class="radio">
-                            <input v-model="sex" type="radio" value="Муж." name="answer" required>
-                            Мужчина
-                        </label>
-                        <label class="radio">
-                            <input v-model="sex" type="radio" value="Жен." name="answer" required>
-                            Женщина
-                        </label>
+                    <br>
+                    <div class="select is-primary">
+                        <select :disabled="!timeslots.length>0" ref="time">
+                            <option disabled selected value="">{{selectDefault}}</option>
+                            <option v-for="timeslot in timeslots" :key="timeslot.id" :value="timeslot.id">{{timeslot.time_slot}}</option>
+                        </select>
                     </div>
-                </div>
-                <div class="input-with-label">
-                    <span>Дата рождение</span>
-                    <input ref="birth_date" class="input is-primary" type="date" placeholder="Дата рождения" required>
+                    <!-- <input ref="time" class="input is-primary" min="00:00" max="23:59" type="time" placeholder="Время" required> -->
                 </div>
                 <div class="input-with-label">
                     <span>Описание</span>
@@ -62,33 +60,57 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/app/store/axios';
+import { mapGetters } from 'vuex';
+// import axios from 'axios';
 
 export default {
     name: "ModalForm",
+    props: {
+        modalData: Object
+    },
     data(){
         return{
-            sex: '',
             loading: false,
-            success: false
+            success: false,
+            timeslots: [], 
+            timeslots_error: ''
+        }
+    },
+    computed:{
+        ...mapGetters([
+            'user_name',
+            'user_type',
+            'user_data'
+        ]),
+        selectDefault(){
+            if(!this.timeslots_error.length>0){
+                return 'Пожалуйста выберите дату регистрации';
+            }else{
+                return this.timeslots_error;
+            }
         }
     },
     methods: {
+        load_timeslots(){
+            axios.get(`/appointments/${this.$refs.IIN_doctor.value}/${this.$refs.date.value}`).then(
+                (response)=>{
+                    this.timeslots = response.data;
+                }
+            )
+            .catch((response)=>{
+                this.timeslots_error = response.response.data.error;
+            })
+        },
         sendForm(evt){
             evt.preventDefault();
-            this.loading=true;            
-            axios.post(`/api/appointments?token=${localStorage.getItem('token')}`,
+            this.loading=true;
+            axios.post(`/appointments/${this.$refs.IIN_doctor.value}/${this.$refs.date.value}`,
                 {
-                name: this.$refs.name.value,
-                date: this.$refs.date.value,
-                time: this.$refs.time.value,
-                sex: this.sex,
-                birth_date: this.$refs.birth_date.value,
-                description: this.$refs.description.value,
-            })
-            .then((response) => {
-                // eslint-disable-next-line no-console
-                console.log(response.data);
+                    time: this.$refs.time.value,
+                    description: this.$refs.description.value,
+                    patient: this.$refs.IIN_patient.value,
+                    doctor: this.$refs.IIN_doctor.value
             })
             .then(
                 setTimeout(()=>{
@@ -100,8 +122,13 @@ export default {
                 setTimeout(()=>{
                     this.$eventHub.$emit('close_modal');
                 }, 2500)
+            ).catch((error)=>{
+                this.error = error
+                this.loading = false;
+                this.success=true;
+            }
             )
-        }
+        },
     }
 }
 </script>

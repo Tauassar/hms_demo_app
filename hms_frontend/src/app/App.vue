@@ -12,7 +12,7 @@
       </div>
     </div>
     <div v-if="modalIsOpen" @click.self="modalIsOpen=false" class="folder-block">
-      <modal-form />
+      <modal-form  :modalData="modalData" />
     </div>
   </div>
 </template>
@@ -33,7 +33,8 @@ export default {
   },
   data(){
       return {
-          modalIsOpen: false
+          modalIsOpen: false,
+          modalData: {}
       }
   },
   computed: {
@@ -42,10 +43,12 @@ export default {
     ])
   },
   created() {
-    this.$eventHub.$on('open_modal', ()=>{
+    this.$eventHub.$on('open_modal', (modalData)=>{
+      this.modalData = modalData;
       this.modalIsOpen = true;
     })
     this.$eventHub.$on('close_modal', ()=>{
+      this.modalData = {}
       this.modalIsOpen = false;
     })
   },
