@@ -11,8 +11,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(doctor, index) in PaginatedDoctors" :key="index">
-                    <th>{{index}}</th>
+                <tr @click="$router.push(`/doctors/${doctor.username}`)" v-for="(doctor, index) in PaginatedDoctors" :key="index">
+                    <th>{{index+1}}</th>
                     <th>{{`${doctor.first_name} ${doctor.last_name}`}}</th>
                     <th>{{doctor.position}}</th>
                     <th>{{doctor.department_str}}</th>

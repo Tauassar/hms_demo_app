@@ -5,6 +5,7 @@ import NotFound from '../components/NotFound.vue';
 import MainPage from '../components/InnerPages/Appointments/MainPage.vue'
 import AppointmentPage from '../components/InnerPages/Appointments/Appointment/AppointmentPage.vue'
 import Profile from '../components/InnerPages/Profile/Profile.vue'
+import Profiles from '../components/InnerPages/Profiles/Profile.vue'
 import Patients from '../components/InnerPages/Patients/PatientsPage.vue'
 import Doctors from '../components/InnerPages/Doctors/DoctorsPage.vue'
 import Departments from '../components/InnerPages/Departments/Department.vue'
@@ -27,8 +28,18 @@ const router = new VueRouter({
       component: MainPage,
     },
     {
+      path: '/patients/:username',
+      component: Profiles,
+      props: true,
+    },
+    {
       path: '/patients',
       component: Patients
+    },
+    {
+      path: '/doctors/:username',
+      component: Profiles,
+      props: true,
     },
     {
       path: '/doctors',

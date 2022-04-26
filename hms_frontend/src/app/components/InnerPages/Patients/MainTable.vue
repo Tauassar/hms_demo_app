@@ -11,8 +11,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(patient, index) in PaginatedPatients" :key="index">
-                    <th>{{patient.id}}</th>
+                <tr @click="$router.push(`/patients/${patient.username}`)" v-for="(patient, index) in PaginatedPatients" :key="index">
+                    <th>{{index+1}}</th>
                     <th>{{`${patient.first_name} ${patient.last_name}`}}</th>
                     <th>{{medical_status(patient.medical_status).status}}</th>
                     <th>{{medical_status(patient.medical_status).blood_group}}</th>
