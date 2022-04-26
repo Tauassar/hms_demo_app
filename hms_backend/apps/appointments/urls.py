@@ -1,4 +1,5 @@
 from django.urls import path, include
+
 from apps.appointments.views import AppointmentDayView, Appointments
 
 # The API URLs are now determined automatically by the router.

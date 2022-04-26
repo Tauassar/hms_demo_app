@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # db:
+  #   image: "postgres:latest"
+  #   restart: "always"
+  #   volumes:
+  #     - "./data/db:/var/lib/postgresql/data"
+  #   environment:
+  #     - "POSTGRES_DB=astradoc_db"
+  #     - "POSTGRES_USER=astradoc"
+  #     - "POSTGRES_PASSWORD=jpvJJfCFjw36bYhA"
+  #   ports:
+  #     - "5432:5432"
+
+  backend:
+    build: "./hms_backend"
+    image: "medbackend:latest"
+    restart: "always"
+    expose:
+      - "80"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/usr/src/app"
+    environment:
+      - "DB_HOST=db"
+      - "DB_NAME=astradoc_db"
+      - "DB_USER=astradoc"
+      - "DB_PASSWORD=jpvJJfCFjw36bYhA"
+      - "DB_PORT=5432"
+    command: bash -c "python3 manage.py runserver [::]:8000"
+    
+
+  frontend:
+    build: "./hms_frontend"
+    image: "medfrontend:latest"
+    restart: "always"
+    depends_on:
+      - "backend"
+    

@@ -1,14 +1,17 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, ListModelMixin
 from rest_framework.response import Response
+from rest_framework import filters
 
 # Create your views here.
 from apps.appointments.models import AppointmentDay, Appointment
-from apps.appointments.serializers import TimeSlotSerializer, AppointmentSerializer, GetAppointments
+from apps.appointments.serializers import TimeSlotSerializer, AppointmentSerializer, GetAppointments, PrescriptionSerializer
 from apps.appointments.utils import get_appointment_day
 from apps.user_app.utils import get_doctor_object
+from apps.appointments import serializers
 
 
 class Appointments(
@@ -89,3 +92,27 @@ class AppointmentDayView(
             return Response({
                 "error": str(e)
             })
+
+
+class PrescriptionViewSet(
+    ListModelMixin, 
+    RetrieveModelMixin, 
+    GenericViewSet):
+
+    queryset = Appointment.objects.all()
+    from rest_framework.permissions import AllowAny
+    permission_classes = [AllowAny]
+    serializer_class = PrescriptionSerializer
+    lookup_field = 'id'
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['patient__first_name', 'doctor__first_name', 'date__date', 'medicine']
+
+    def retrieve(self, request, *args, **kwargs):
+        if request.user.type != 'pharmacy':
+            return Response('this page is allowed only for pharmacists')
+        return super().retrieve(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        if request.user.type != 'pharmacy':
+            return Response('this page is allowed only for pharmacists')
+        return super().list(request, *args, **kwargs)

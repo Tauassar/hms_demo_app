@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+
+from apps.appointments.views import PrescriptionViewSet
+
+
+router = routers.SimpleRouter()
+router.register(r'prescriptions', PrescriptionViewSet, basename='')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('apps.user_app.urls')),
     path('departments/', include('apps.departments.urls')),
-    path('appointments/', include('apps.appointments.urls'))
+    path('appointments/', include('apps.appointments.urls')),
+    path('', include(router.urls)),
 ]

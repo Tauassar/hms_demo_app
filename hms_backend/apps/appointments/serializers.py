@@ -35,3 +35,10 @@ class AppointmentSerializer(serializers.ModelSerializer):
             doctor=doctor,
             date=validated_data.get('date')
         )
+
+
+class PrescriptionSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Appointment
+        fields = ['patient', 'doctor', 'date', 'medicine']

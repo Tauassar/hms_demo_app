@@ -83,6 +83,8 @@ class Appointment(models.Model):
     time = models.IntegerField(choices=TimeSlots.choices)
     description = models.CharField(max_length=200)
 
+    medicine = models.TextField(blank=True, null=True)
+
     @classmethod
     def get_time_string(cls, time_int):
         for num, string in cls.TimeSlots.choices:
