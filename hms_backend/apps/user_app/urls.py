@@ -26,4 +26,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login/', views.LoginView.as_view()),
     path('logout/', views.logoutView),
+    path('medical_history', views.MedicalHistoryView.as_view()),
 ]

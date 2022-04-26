@@ -3,12 +3,14 @@ from django.http import JsonResponse, HttpResponse
 
 # Create your views here.
 from rest_framework import status, views
+from rest_framework.generics import CreateAPIView, GenericAPIView
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.user_app.models import CustomUser
-from apps.user_app.serializers import GetDoctorSerializer, CreateDoctorSerializer,\
-    GetPatientSerializer, CreatePatientSerializer
+from apps.user_app.models import CustomUser, MedicalHistory
+from apps.user_app.serializers import GetDoctorSerializer, CreateDoctorSerializer, \
+    GetPatientSerializer, CreatePatientSerializer, CreateMedicalHistorySerializer
 
 
 def logoutView(request):
@@ -73,3 +75,16 @@ class PatientViewSet(ModelViewSet):
         if self.action == 'create':
             return self.serializer_classes[self.action]
         return self.serializer_classes['default']
+
+
+class MedicalHistoryView(
+    CreateModelMixin,
+    GenericAPIView):
+    allowed_methods = ['POST']
+    queryset = MedicalHistory.objects.all()
+    serializer_class = CreateMedicalHistorySerializer
+    permission_classes = []
+    authentication_classes = []
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)

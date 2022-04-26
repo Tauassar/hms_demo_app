@@ -21,3 +21,7 @@ def get_appointment_day(date, doctor):
             raise ObjectDoesNotExist("На данную дату запись невозможна")
         else:
             return None
+
+
+def create_appointment():
+    pass

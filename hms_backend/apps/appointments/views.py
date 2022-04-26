@@ -1,10 +1,12 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, ListModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, ListModelMixin
 from rest_framework.response import Response
 
 # Create your views here.
+from rest_framework.viewsets import ReadOnlyModelViewSet, GenericViewSet
+
 from apps.appointments.models import AppointmentDay, Appointment
 from apps.appointments.serializers import TimeSlotSerializer, AppointmentSerializer, GetAppointments
 from apps.appointments.utils import get_appointment_day
@@ -12,15 +14,16 @@ from apps.user_app.utils import get_doctor_object
 
 
 class Appointments(
+    DestroyModelMixin,
     ListModelMixin,
-    GenericAPIView
+    RetrieveModelMixin,
+    GenericViewSet
 ):
     allowed_methods = ['GET']
     queryset = Appointment.objects.all()
     serializer_class = GetAppointments
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+    permission_classes = []
+    authentication_classes = []
 
 
 class AppointmentDayView(
@@ -34,6 +37,8 @@ class AppointmentDayView(
         'create': AppointmentSerializer,
         'retrieve': TimeSlotSerializer,
     }
+    permission_classes = []
+    authentication_classes = []
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -62,7 +67,7 @@ class AppointmentDayView(
         except ObjectDoesNotExist as e:
             return Response({
                 "error": str(e)
-            })
+            }, status=status.HTTP_400_BAD_REQUEST)
 
     def create(self, request, *args, **kwargs):
         doctor_pk = self.kwargs['doctor_pk']
@@ -71,14 +76,24 @@ class AppointmentDayView(
             doctor = get_doctor_object(doctor_pk)
 
             if not AppointmentDay.objects.filter(
-                    date=request.data['date'],
+                    date=self.kwargs['date'],
                     doctor=doctor
             ).exists():
-                AppointmentDay.objects.create(
-                    date=request.data['date'],
+                day = AppointmentDay.objects.create(
+                    date=self.kwargs['date'],
                     doctor=doctor
                 ).save()
-            serializer = self.get_serializer(data=request.data)
+            else:
+                day = AppointmentDay.objects.get(
+                    date=self.kwargs['date'],
+                    doctor=doctor
+                )
+            serializer = self.get_serializer(
+                data=request.data,
+                context={
+                    'date': day
+                }
+            )
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
             return Response(
@@ -88,4 +103,4 @@ class AppointmentDayView(
         except ObjectDoesNotExist as e:
             return Response({
                 "error": str(e)
-            })
+            }, status=status.HTTP_400_BAD_REQUEST)

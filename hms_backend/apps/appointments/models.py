@@ -19,15 +19,19 @@ class AppointmentDay(models.Model):
 
     def get_available_time_slots(self):
         appointment_list = self.appointment_event.all()
-        time_slot_list = [x for _, x in Appointment.TimeSlots.choices]
+        time_slot_list = [x for x_int, x in Appointment.TimeSlots.choices]
         time_slots = []
 
         for appointment in appointment_list:
-            time_slot_list.remove(Appointment.get_time_string(appointment.time))
+            try:
+                time_slot_list.remove(Appointment.get_time_string(appointment.time))
+            except ValueError:
+                continue
 
         for time_slot in time_slot_list:
             time_slots.append({
-                "time_slot": time_slot
+                "time_slot": time_slot,
+                "id": Appointment.get_time_int(time_slot)
             })
         return time_slots
 
@@ -36,7 +40,8 @@ class AppointmentDay(models.Model):
         time_slots = []
         for _, time_slot in Appointment.TimeSlots.choices:
             time_slots.append({
-                "time_slot": time_slot
+                "time_slot": time_slot,
+                "id": Appointment.get_time_int(time_slot)
             })
         return time_slots
 
@@ -56,7 +61,7 @@ class Appointment(models.Model):
         TWELVE_HALF = 8, '12:30-13:00'
         FOURTEEN_HALF = 9, '14:30-15:00'
         FIFTEEN = 10, '15:00-15:30'
-        FIFTEEN_HALF = 11, '15:00-15:30'
+        FIFTEEN_HALF = 11, '15:30-16:00'
         SIXTEEN = 12, '16:00-16:30'
         SIXTEEN_HALF = 13, '16:30-17:00'
         SEVENTEEN = 14, '17:00-17:30'
@@ -83,6 +88,13 @@ class Appointment(models.Model):
     time = models.IntegerField(choices=TimeSlots.choices)
     description = models.CharField(max_length=200)
 
+    @property
+    def get_own_time_string(self):
+        for num, string in self.TimeSlots.choices:
+            if num == self.time:
+                return string
+        return None
+
     @classmethod
     def get_time_string(cls, time_int):
         for num, string in cls.TimeSlots.choices:
@@ -94,7 +106,7 @@ class Appointment(models.Model):
     def get_time_int(cls, time_str):
         for num, string in cls.TimeSlots.choices:
             if string == time_str:
-                return int
+                return num
         return None
 
     def __str__(self):

@@ -10,19 +10,24 @@ class TimeSlotSerializer(serializers.Serializer):
         max_length=12,
         read_only=True
     )
+    id = serializers.IntegerField()
 
 
 class GetAppointments(serializers.ModelSerializer):
+    time_str = serializers.ReadOnlyField(
+        source='get_own_time_string'
+    )
+
     class Meta:
         model = Appointment
-        fields = '__all__'
+        exclude = ['time']
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Appointment
-        exclude = ['id']
+        exclude = ['id', 'date']
 
     def create(self, validated_data):
         print(validated_data)
@@ -33,5 +38,5 @@ class AppointmentSerializer(serializers.ModelSerializer):
             description=validated_data.get('description'),
             patient=validated_data.get('patient'),
             doctor=doctor,
-            date=validated_data.get('date')
+            date=self.context.get('date')
         )

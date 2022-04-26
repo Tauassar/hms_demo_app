@@ -36,6 +36,13 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
+    @property
+    def get_user_department(self):
+        if self.type == 'doctor':
+            return self.doctor.department.title
+        else:
+            return ''
+
     def __str__(self):
         return f'{self.type} {self.first_name} {self.last_name}'
 

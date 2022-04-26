@@ -37,6 +37,9 @@ def create_user_and_contacts(validated_data):
 
 class GetDoctorSerializer(serializers.ModelSerializer):
     contacts = UserContactsSerializer()
+    department_str = serializers.ReadOnlyField(
+        source='get_user_department'
+    )
     position = serializers.SlugRelatedField(
         queryset=DoctorFields.objects.all(),
         source='doctor',
@@ -142,7 +145,7 @@ class DepartmentDoctorsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'description_short', 'img']
+        fields = ['username', 'first_name', 'last_name', 'description_short', 'img']
 
 
 # PATIENT SERIALIZERS
@@ -158,6 +161,12 @@ class MedicalHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MedicalHistory
         exclude = ['user', 'id']
+
+
+class CreateMedicalHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MedicalHistory
+        fields = '__all__'
 
 
 class GetPatientSerializer(serializers.ModelSerializer):
