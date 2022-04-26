@@ -17,9 +17,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 AUTH_USER_MODEL = 'user_app.CustomUser'
 
-# CORS_ALLOWED_ORIGINS = [
-#     '*',
-# ]
+#CORS_ALLOWED_ORIGINS = [
+#    '*',
+#]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -59,7 +59,7 @@ SECRET_KEY = 'django-insecure-atgwvio0xd))we!z47)dn_4b1rc8b#pt0mmn$xz&-3h@&#y93*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 

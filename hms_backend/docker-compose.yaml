@@ -20,7 +20,7 @@ services:
     expose:
       - "80"
     ports:
-      - "8000:8000"
+      - "9000:8000"
     volumes:
       - ".:/usr/src/app"
     environment:
@@ -32,10 +32,12 @@ services:
     command: bash -c "python3 manage.py runserver [::]:8000"
     
 
-  frontend:
-    build: "./hms_frontend"
-    image: "medfrontend:latest"
-    restart: "always"
-    depends_on:
-      - "backend"
-    
+    #  frontend:
+    #build: "./hms_frontend"
+    #image: "medfrontend:latest"
+    #restart: "always"
+    #depends_on:
+    # - "backend"
+    #expose:
+    #  - "8080"
+    #command: bash -c "npm start"
